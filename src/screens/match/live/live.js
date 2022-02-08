@@ -3,6 +3,7 @@ import { ScrollView,View,Text,RefreshControl,Image,FlatList } from 'react-native
 import { useDispatch, useSelector } from 'react-redux'		
 import { fetchMatchLiveData } from './matchLiveReducer';
 import style from './styles'
+import Loader from '../../../components/loader';
 
 export default function Live(props) {
   
@@ -11,8 +12,21 @@ export default function Live(props) {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchMatchLiveData(props.route.params.matchId))
-    }, [props])
+        function getMatchScore() {
+            dispatch(fetchMatchLiveData(props.route.params.matchId))
+        }
+        getMatchScore()
+        if(liveScore.live.match_finished === false){
+        
+            
+            const interval = setInterval(() => getMatchScore(), 20000)
+            return () => {
+                clearInterval(interval);
+            }
+        }
+       
+        
+    }, [props.route.params.matchId])
 
     const renderTeams = (teams) => {
         if (!teams) {
@@ -49,7 +63,7 @@ export default function Live(props) {
         return (
             <View style={style.comentoryContainer}>
 
-                <View style={{ flex: 1, justifyContent: 'center' }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={style.comentoryOver}>{item.overs}</Text>
                     {item.score != null && item.score.toString().length > 0 &&
                         <View style={[
@@ -69,23 +83,30 @@ export default function Live(props) {
     const _Separator = () => <View style={style.separator} />
 
     const onRefresh = () => {
-        dispatch(fetchMatchLiveData(props.matchId));
+        dispatch(fetchMatchLiveData(props.route.params.matchId));
     }
+
+    console.log(liveScore);
 
     return (
         <ScrollView style={style.container}
                 refreshControl={
                     <RefreshControl refreshing={liveScore.refreshing} onRefresh={onRefresh} />
                 }>
-                {renderTeams(liveScore.live.team_details)}
-                <Text style={style.matchStatusText}>{liveScore.live.match_status}</Text>
-                <View style={style.separator} />
-                {renderMatchStat(liveScore.live.match_stats)}
-                <FlatList
-                    data={liveScore.live.commentatory}
-                    renderItem={renderComentory}
-                    ItemSeparatorComponent={_Separator}
-                    keyExtractor={(item, index) => (index.toString())} />
+                { liveScore.loading && <Loader />}
+                { !liveScore.loading &&
+                    <View>
+                        {renderTeams(liveScore.live.team_details)}
+                        <Text style={style.matchStatusText}>{liveScore.live.match_status}</Text>
+                        <View style={style.separator} />
+                        {renderMatchStat(liveScore.live.match_stats)}
+                        <FlatList
+                            data={liveScore.live.commentatory}
+                            renderItem={renderComentory}
+                            ItemSeparatorComponent={_Separator}
+                            keyExtractor={(item, index) => (index.toString())} />
+                    </View>
+                }
             </ScrollView>
     )
 }

@@ -49,17 +49,21 @@ export default function PlayerProfile(props) {
         <ScrollView>
             <View style={style.container}> 
                 { playerInfo.loading &&  <Loader/>}
-                <View style={style.headerContent}>
-                    <Image style={style.avatar}
-                            source={ playerInfo.player.player_info.player_image !== '' ? { uri: playerInfo.player.player_info.player_image }
-                            : require('./../../../assets/images/player.png')}/>
-                    <Text style={style.name}>{ playerInfo.player.player_info.player_name}</Text>
-                    <Text style={style.teamName}>{ playerInfo.player.player_info.team_name}</Text>
-                </View>
-                <View style={style.tournamentHeaderContainer}>
-                        <Text style={style.tournamentHeader}>{ playerInfo.player.player_info.tournament_name}</Text>
-                </View>
-                { renderPlayerStats(playerInfo.player.matches) }
+                { !playerInfo.loading && playerInfo.player.player_info && 
+                    <View>
+                        <View style={style.headerContent}>
+                            <Image style={style.avatar}
+                                    source={ playerInfo.player.player_info.player_image !== '' ? { uri: playerInfo.player.player_info.player_image }
+                                    : require('./../../../assets/images/player.png')}/>
+                            <Text style={style.name}>{ playerInfo.player.player_info.player_name}</Text>
+                            <Text style={style.teamName}>{ playerInfo.player.player_info.team_name}</Text>
+                        </View>
+                        <View style={style.tournamentHeaderContainer}>
+                                <Text style={style.tournamentHeader}>{ playerInfo.player.player_info.tournament_name}</Text>
+                        </View>
+                        {renderPlayerStats(playerInfo.player.matches) }
+                    </View>
+                }
             </View>
         </ScrollView>
     )

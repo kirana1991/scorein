@@ -15,7 +15,7 @@ export default StyleSheet.create({
     },
     inningHeaderContainer: {
         flexDirection: 'row',
-        backgroundColor: '#7b7b87',
+        backgroundColor: '#6781ab',
         paddingVertical: 10
     },
     inningHeaderTeamName: {
@@ -147,6 +147,21 @@ export default StyleSheet.create({
         alignItems:'center',
         backgroundColor: 'grey',
     },
+    active: {
+    backgroundColor: 'rgba(255,255,255,1)',
+    },
+    inactive: {
+    backgroundColor: 'rgba(245,252,255,1)',
+    },
+    header: {
+        backgroundColor: '#F5FCFF',
+        padding: 10,
+      },
+      headerText: {
+       
+        fontSize: 16,
+        fontWeight: '500',
+      },
 
 
 })

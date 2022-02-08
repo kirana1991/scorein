@@ -12,9 +12,8 @@ export default function matches() {
     const Tab = createMaterialTopTabNavigator();
 
     useEffect(() => {
-        console.log('matches list');
         dispatch(fetchMatchesScreenData())
-    }, [])
+    })
     
     return (
         <Tab.Navigator>

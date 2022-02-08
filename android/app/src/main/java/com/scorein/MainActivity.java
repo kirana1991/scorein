@@ -1,4 +1,4 @@
-package com.scorein;
+package com.score.in.app;
 
 import com.facebook.react.ReactActivity;
 

@@ -37,12 +37,14 @@ export const { getMatchLiveData, getMatchesLiveSuccess, getMatchesLiveFailure} =
 export default matchLiveScreen.reducer
 
 export function fetchMatchLiveData(matchId){
+    
     return async dispatch => {
         dispatch(getMatchLiveData())
         try{
             const response = await fetch(HOST+MATCH_LIVE(matchId))
             const data = await response.json()
             dispatch(getMatchesLiveSuccess(data))
+            
             
         } catch(error){
             console.log(error)

@@ -15,7 +15,8 @@ export default function MatchScreen(props)
     }, [])
    
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+        initialRouteName="Live">
             <Tab.Screen name="Info" component={Info} initialParams={{matchId: props.route.params.matchId}}/>
             <Tab.Screen name="Live" component={Live} initialParams={{matchId: props.route.params.matchId}} />
             <Tab.Screen name="Scorecard" component={Scorecard} initialParams={{matchId: props.route.params.matchId}} />

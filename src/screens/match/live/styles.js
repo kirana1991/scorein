@@ -82,6 +82,7 @@ export default StyleSheet.create({
     separator: {
         flex: 1,
         height: 1,
-        backgroundColor: 'black'
+        backgroundColor: '#cccaca',
+        marginHorizontal: 10
     }
 })

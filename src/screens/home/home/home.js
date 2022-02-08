@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'		
-import { Text, SafeAreaView, FlatList, View, Image, ActivityIndicator } from "react-native";
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, SafeAreaView, FlatList, View, Image, TouchableOpacity } from "react-native";
+import { ScrollView } from 'react-native-gesture-handler';
 import MatchCarousel from '../../../components/carousel/matchCarousel';
 import { fetchHomeScreenData } from './homeReducer'	;
 import MatchCard from './../../../components/matchCard';	
@@ -21,7 +21,7 @@ export default function Home({navigation}) {
 
     renderNews = ({ item }) => {
         return (
-            <TouchableOpacity activeOpacity={0.5} onPress={() => viewNews(item)}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => viewNews(item)}>
                 <View style={style.newsContainer} key={item.id}>
                     <Image style={style.newsImage} source={{ uri: item.image }} resizeMode="stretch"/>
                     <Text style={style.newsHeadertext}>{item.news_headline}</Text>
@@ -31,18 +31,18 @@ export default function Home({navigation}) {
         )
     }
 
-    viewMatch = (id) => {
-        navigation.navigate('Match',{ matchId : id });
+    viewMatch = (id, matchHeader) => {
+        navigation.navigate('Match',{ matchId : id, header:  matchHeader});
     }
 
     getMatchSummaries = (matches) => {
         return matches.map((match) => (
-            <MatchCard summary={match} showTournament={true} onPress={() => viewMatch(match.match_id)} />
+            <MatchCard summary={match} showTournament={true} onPress={() => viewMatch(match.match_id,match.match_header)} />
         ))
     }
 
-    viewNews = (_news) => {
-        navigation.navigate('Matches');
+    viewNews = (news) => {
+        navigation.navigate('News',{news});
     }
    
     return (

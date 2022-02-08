@@ -13,7 +13,7 @@ export default function Info(props) {
 
     useEffect(() => {
         dispatch(fetchMatchInfoData(props.route.params.matchId))
-    }, [props])
+    }, [props.route.params.matchId])
 
     const renderInfoView = (info) => {
         if (!info) {
@@ -52,7 +52,7 @@ export default function Info(props) {
     const viewPlayers = (players, team) => {
         props.navigation.navigate('Players', { players:players, teamName: team});
     }
-    
+    console.log(matchInfo.squads);
     return (
         <ScrollView>
             { matchInfo.loading &&  <Loader/>}

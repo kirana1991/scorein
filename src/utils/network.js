@@ -1,4 +1,4 @@
-export const HOST = 'http://scorein.co.in';
+export const HOST = 'http://demo.scorein.co.in';
 const API_VERSION_1 = '/api'
 
 export const HOME = `${API_VERSION_1}/home`;
@@ -12,3 +12,4 @@ export const MATCH_INFO = (matchId) => `${API_VERSION_1}/match-info/${matchId}`;
 export const MATCH_LIVE = (matchId) => `${API_VERSION_1}/live-score/${matchId}`;
 export const MATCH_SCORE_CARD = (matchId) => `${API_VERSION_1}/scorecard/${matchId}`;
 export const PLAYER_PROFILE = (playerId) => `${API_VERSION_1}/player-tournament-info/${playerId}`;
+export const POSTDEVICEINFO = `${API_VERSION_1}/tournament-list`;

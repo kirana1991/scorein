@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react'
-import { View , SectionList, Text } from 'react-native'
+import { View , SectionList, Text, SafeAreaView, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import style from './styles'
 import NoDataView from '../../../../components/noDataView'
@@ -13,7 +13,6 @@ export default function Recent(props) {
     const  matches  = useSelector((state) => state.matchesScreen.recent);
 
     useEffect(() => {
-        console.log('recent');
         if (matches &&
             matches.length > 0) {
                 setRecentMatches(matches.map((item) => {
@@ -42,22 +41,26 @@ export default function Recent(props) {
     }
 
     return (
-        <View style={style.container}>
-            { matches.loading && <Loader />}
-            {recentMatches &&
-                <SectionList
-                    renderItem={renderMatchItem}
-                    renderSectionHeader={renderMatchHeader}
-                    sections={recentMatches}
-                    keyExtractor={(item, index) => item + index}
-                />
-            }       
-            
-            {!recentMatches &&     
-                <NoDataView message={"No Matches Found"} />
-            }
-            
-        </View>
+        
+        <ScrollView style={style.container}>
+            <View style={style.container}>
+                { matches.loading && <Loader />}
+                { !matches.loading && recentMatches &&
+                    <SectionList
+                        renderItem={renderMatchItem}
+                        renderSectionHeader={renderMatchHeader}
+                        sections={recentMatches}
+                        keyExtractor={(item, index) => item + index}
+                    />
+                }       
+                
+                {!recentMatches &&     
+                    <NoDataView message={"No Matches Found"} />
+                }
+                
+            </View>
+        </ScrollView>
+        
     )
 }
 

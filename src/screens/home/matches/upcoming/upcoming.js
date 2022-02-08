@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react'
-import { View , SectionList, Text } from 'react-native'
+import { View , SectionList, Text, SafeAreaView, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import style from './styles'
 import NoDataView from '../../../../components/noDataView'
@@ -40,22 +40,26 @@ export default function Upcoming(props) {
     }
 
     return (
-        <View style={style.container}>
-            { matches.loading && <Loader />}
-            {upcomingMatches &&
-                <SectionList
-                    renderItem={renderMatchItem}
-                    renderSectionHeader={renderMatchHeader}
-                    sections={upcomingMatches}
-                    keyExtractor={(item, index) => item + index}
-                />
-            }  
+        <SafeAreaView>
+            <ScrollView>
+                <View style={style.container}>
+                    { matches.loading && <Loader />}
+                    { !matches.loading && upcomingMatches &&
+                        <SectionList
+                            renderItem={renderMatchItem}
+                            renderSectionHeader={renderMatchHeader}
+                            sections={upcomingMatches}
+                            keyExtractor={(item, index) => item + index}
+                        />
+                    }  
 
-            {!upcomingMatches &&     
-                <NoDataView message={"No Matches Scheduled"} />
-            }
-            
-        </View>
+                    {!upcomingMatches &&     
+                        <NoDataView message={"No Matches Scheduled"} />
+                    }
+                    
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

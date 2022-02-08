@@ -1,4 +1,4 @@
-package com.scorein;
+package com.score.in.app;
 
 import android.app.Application;
 import android.content.Context;

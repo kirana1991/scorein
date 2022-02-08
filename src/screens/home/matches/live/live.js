@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react'
-import { View , SectionList, Text } from 'react-native'
+import { View , SectionList, Text, SafeAreaView, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import style from './styles'
 import NoDataView from '../../../../components/noDataView'
@@ -41,22 +41,26 @@ export default function Live(props) {
     }
 
     return (
-        <View style={style.container}>
-            { matches.loading && <Loader />}
-            {liveMatches &&
-                <SectionList
-                    renderItem={renderMatchItem}
-                    renderSectionHeader={renderMatchHeader}
-                    sections={liveMatches}
-                    keyExtractor={(item, index) => item + index}
-                />
-            }  
+        <SafeAreaView >
+            <ScrollView>
+                <View style={style.container}>
+                    { matches.loading && <Loader />}
+                    {!matches.loading && liveMatches &&
+                        <SectionList
+                            renderItem={renderMatchItem}
+                            renderSectionHeader={renderMatchHeader}
+                            sections={liveMatches}
+                            keyExtractor={(item, index) => item + index}
+                        />
+                    }  
 
-            {!liveMatches &&     
-                <NoDataView message={"No Live Matches"} />
-            }
-            
-        </View>
+                    {!liveMatches &&     
+                        <NoDataView message={"No Live Matches"} />
+                    }
+                    
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

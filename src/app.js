@@ -8,6 +8,5 @@ export default function app(){
         <Provider store={store}>
             <Routes />
         </Provider>
-        
     )
 }

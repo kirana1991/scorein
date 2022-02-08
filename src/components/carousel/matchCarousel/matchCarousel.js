@@ -1,5 +1,5 @@
 import React,{ useState, useRef, useEffect  } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import style from './styles'
 import  { THEME_PRIMARY } from './../../../utils/constant'
 
@@ -12,7 +12,7 @@ export default function MatchCarousel(props, {navigation}) {
   const [initialSelectedIndex, setInitialSelectedIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const scrollViewRef = useRef();
-  const indicators = [];
+  const caraouselIndicator = [];
 
   adjustCardSize = (e) => {
     setWidth(e.nativeEvent.layout.width);
@@ -28,22 +28,29 @@ export default function MatchCarousel(props, {navigation}) {
     setSelectedIndex(selectedIndex); 
   }
 
-  renderIndicator = (key) => {
-    return (
-        <View style={{
-            width: DOT_SIZE,
-            height: DOT_SIZE,
-            borderRadius: DOT_SIZE / 2,
-            backgroundColor: '#E0E1E2',
-            marginLeft: DOT_SAPCE,
-            marginRight: DOT_SAPCE,
-            opacity: selectedIndex === key ? 1.0 : 0.7,
-            backgroundColor: selectedIndex === key ? THEME_PRIMARY : 'grey'
-        }} key={'idc_' + key} />
-    );
+  const renderIndicator = (item) => {
+    const caraouselIndicator = [];
+    for (var i = 0; i < item.length; i++) {
+        caraouselIndicator.push(
+            <View style={{
+                width: DOT_SIZE,
+                height: DOT_SIZE,
+                borderRadius: DOT_SIZE / 2,
+                backgroundColor: '#E0E1E2',
+                marginLeft: DOT_SAPCE,
+                marginRight: DOT_SAPCE,
+                opacity: selectedIndex === i ? 1.0 : 0.7,
+                backgroundColor: selectedIndex === i ? THEME_PRIMARY : 'grey'
+            }} key={'idc_' + i} />
+        );
+    }
+    return caraouselIndicator;
+    
   }
 
-  renderItems = () => {
+
+
+  const renderItems = () => {
     return props.data.map((item, index) => {
         return (<View style={{
             width: width,
@@ -56,17 +63,9 @@ export default function MatchCarousel(props, {navigation}) {
     })
   }
 
-  useEffect(() => {
-        if (props.data) {
-            for (var i = 0; i < props.data.length; i++) {
-                indicators.push(renderIndicator(i))
-            }
-        }
-  }, [props.data])
   
     return (
       <View style={props.style}>
-                
                 <ScrollView style={style.matchScrollView}
                     contentOffset={{
                         x: width * initialSelectedIndex,
@@ -93,7 +92,7 @@ export default function MatchCarousel(props, {navigation}) {
                         alignSelf: 'center',
                         backgroundColor: 'transparent'
                     }}>
-                        {indicators}
+                        {renderIndicator(props.data)}
                     </View> : null}
             </View>
   )
